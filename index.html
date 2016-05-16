@@ -1,0 +1,40 @@
+<html>
+   <head>
+       <title>Rechenaufgaben - Einmaleins</title>
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <link rel="stylesheet" href="lib/w3.css">
+       <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+       <script src="js/app.js"></script>
+   </head>
+   <body onload="generateComputeTask()">
+       <div class="w3-container">
+           <div class="w3-container w3-blue">
+               <h2 class="w3-half">Einmaleins</h2>
+               <i class="fa fa-bars w3-xxxlarge w3-right"></i>
+           </div>
+           <br/>
+            <div class="w3-container">
+                <div id="txtFirstNumber" class="w3-tag w3-white w3-jumbo"></div>
+                <div class="w3-tag w3-white w3-jumbo"><i class="fa fa-circle" style="font-size:24px;vertical-align:middle"></i></div>
+                <div id="txtSecondNumber" class="w3-tag w3-white w3-jumbo"></div>
+                <div class="w3-tag w3-white w3-jumbo">=</div> 
+                <div class="w3-tag w3-white">
+                    <input id="txtUserResult" class="w3-border w3-round w3-jumbo"/>
+                    <div id="btnResult" class="w3-btn w3-grey w3-text-white w3-xxxlarge w3-round w3-margin-bottom-double" 
+                    style="vertical-align:middle" onclick="showSuccess()">OK</div>
+                </div>
+            </div>
+            <br/>
+            <div id="furtherResultsHeader" class="w3-container w3-grey">
+                <h3 class="w3-half w3-text-white">Ergebnisse</h3>
+                <div id="counterSuccess" class="w3-tag w3-green w3-xxlarge">0</div>
+                <div id="counterFail" class="w3-tag w3-red w3-xxlarge">0</div>
+            </div>
+            <br/>
+            <div id="furtherResults" class="w3-container">
+                <ul id="furtherResultsList" class="w3-ul">
+                </ul>
+            </div>
+       </div>
+   </body>
+</html>
