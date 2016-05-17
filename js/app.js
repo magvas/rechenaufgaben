@@ -55,6 +55,14 @@ function getResult(){
     return result;
 }
 
+function showSettings(){
+    document.getElementById("dlgSettings").style.display = "block";
+}
+
+function closeSettings() {
+    document.getElementById("dlgSettings").style.display = "none";
+}
+
 var resultContainer = function(){
     this.result;
     this.computeTask;
