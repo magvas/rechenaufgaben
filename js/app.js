@@ -1,5 +1,6 @@
-var counterSuccess = 0;
-var counterFail = 0;
+var _counterSuccess = 0;
+var _counterFail = 0;
+var _calculationType = "M";
 
 function getRandomNumber(){
     var randomNumber = Math.floor((Math.random() * 10)+1);
@@ -13,6 +14,23 @@ function generateComputeTask(){
    
     document.getElementById("txtFirstNumber").innerText = firstNumber;
     document.getElementById("txtSecondNumber").innerText = secondNumber; 
+    
+    var calcSymbol = document.getElementById("calcSymbol");
+    
+    switch (_calculationType) {
+        
+        case 'M':
+            document.getElementById("calcSymbolMultiplication").style.visibility = "visible";
+            document.getElementById("calcSymbolAddition").style.visibility = "hidden";
+            break;
+        case 'A':
+            document.getElementById("calcSymbolAddition").style.visibility = "visible";
+            document.getElementById("calcSymbolMultiplication").style.visibility = "hidden";
+            break;
+        default:
+            break;
+    }
+    
     document.getElementById("txtUserResult").value = "";
     document.getElementById("txtUserResult").focus();
 }
@@ -29,13 +47,13 @@ function showSuccess(){
         
     if (result.result == userResult){
         classAttribute.value = "w3-green";
-        counterSuccess++;
-        document.getElementById("counterSuccess").innerText = counterSuccess;
+        _counterSuccess++;
+        document.getElementById("counterSuccess").innerText = _counterSuccess;
     }
     else{
         classAttribute.value = "w3-red";
-        counterFail++;
-        document.getElementById("counterFail").innerText = counterFail;
+        _counterFail++;
+        document.getElementById("counterFail").innerText = _counterFail;
     }
     
     resultListItemElement.setAttributeNode(classAttribute);
@@ -50,8 +68,20 @@ function getResult(){
     var firstNumber = document.getElementById("txtFirstNumber").innerText; 
     var secondNumber = document.getElementById("txtSecondNumber").innerText;
     var result = new resultContainer();
-    result.result = firstNumber * secondNumber;
-    result.computeTask = firstNumber + " * " + secondNumber + " = ";
+    
+    switch (_calculationType) {
+        case 'M':
+            result.result = firstNumber * secondNumber;
+            result.computeTask = firstNumber + " * " + secondNumber + " = ";
+            break;
+        case 'A':
+             result.result = parseInt(firstNumber) + parseInt(secondNumber);
+             result.computeTask = firstNumber + " + " + secondNumber + " = ";
+            break;
+        default:
+            break;
+    }
+    
     return result;
 }
 
@@ -63,6 +93,11 @@ function closeSettings() {
     document.getElementById("dlgSettings").style.display = "none";
 }
 
+function setCalculationType(calculationType) {
+    _calculationType = calculationType;
+    closeSettings();
+    generateComputeTask();
+}
 var resultContainer = function(){
     this.result;
     this.computeTask;
