@@ -6,16 +6,18 @@
        <link rel="stylesheet" href="lib/font-awesome-4.6.3/css/font-awesome.min.css">
        <script src="js/app.js"></script>
    </head>
-   <body onload="showSettings()">
+   <body onload="start()">
        <div class="w3-container">
            <div class="w3-container w3-blue">
-               <h2 class="w3-half">Einmaleins</h2>
+               <h2 class="w3-half">Rechenaufgaben</h2>
                <i class="fa fa-bars w3-xxxlarge w3-right" onclick="showSettings()"></i>
            </div>
            <br/>
             <div class="w3-container">
                 <div id="txtFirstNumber" class="w3-tag w3-white w3-jumbo"></div>
-                <div class="w3-tag w3-white w3-jumbo"><i id="calcSymbolMultiplication" class="fa fa-circle" style="font-size:24px;vertical-align:middle"></i><i id="calcSymbolAddition" class="fa fa-plus" style="font-size:24px;vertical-align:middle"></i></div>
+                <div id="calcSymbolDiv" class="w3-tag w3-white w3-jumbo">
+                    <i id="calcSymbol" style="font-size:24px;vertical-align:middle"></i>                    
+                </div>
                 <div id="txtSecondNumber" class="w3-tag w3-white w3-jumbo"></div>
                 <div class="w3-tag w3-white w3-jumbo">=</div> 
                 <div class="w3-tag w3-white">
@@ -40,12 +42,20 @@
            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="width:30%">
                <header class="w3-container w3-blue">
                    <span onclick="closeSettings()" class="w3-closebtn w3-padding-top">&times;</span>
-                    <h2>Header</h2>
+                    <h2>Einstellungen</h2>
                </header>
-                <div class="w3-container w3-padding-64 w3-text-blue">
-                    <i class="fa fa-circle w3-half w3-padding-64 w3-center w3-xxxlarge w3-border w3-round" onclick="setCalculationType('M')"></i>
-                    <i class="fa fa-plus w3-half w3-padding-64  w3-center w3-xxxlarge w3-border w3-round" onclick="setCalculationType('A')"></i>
-                </div>
+               <div class="w3-container w3-grey w3-text-white">Zahlenraum bis ...</div>
+               <div class="w3-container"><input id="txtNumberSpace" class="w3-border w3-round w3-xlarge w3-third"/></div>
+               <div class="w3-container w3-grey w3-text-white">Rechenart</div>
+               <div class="w3-container w3-text-blue">
+                   <i class="fa fa-circle w3-half w3-padding-64 w3-center w3-xxxlarge w3-border w3-round" onclick="init('M')"></i>
+                   <i class="fa fa-plus w3-half w3-padding-64  w3-center w3-xxxlarge w3-border w3-round" onclick="init('A')"></i><br/>
+                   <div class="w3-container w3-padding-16 w3-half w3-border w3-round w3-center" onclick="init('D')">
+                       <i class="fa fa-circle w3-padding-8  w3-center w3-xxxlarge"></i><br/>
+                       <i class="fa fa-circle w3-padding-8  w3-center w3-xxxlarge"></i>
+                   </div>
+                   <i class="fa fa-minus w3-half w3-padding-64  w3-center w3-xxxlarge w3-border w3-round" onclick="init('MI')"></i>
+               </div>            
            </div>
        </div>
    </body>
