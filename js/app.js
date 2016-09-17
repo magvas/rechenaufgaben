@@ -25,13 +25,22 @@ function generateComputeTask(){
    
     document.getElementById("txtFirstNumber").innerText = firstNumber;
     document.getElementById("txtSecondNumber").innerText = secondNumber; 
-    
-    var calcSymbol = document.getElementById("calcSymbol");
 
-    var calcSymbolDiv = document.getElementById("calcSymbolDiv");
+    var calcSymbolDiv = document.getElementById('calcSymbolDiv');
+
+    var numberOfChilds = calcSymbolDiv.childNodes.length;
+
+    while (calcSymbolDiv.firstChild) {
+    calcSymbolDiv.removeChild(calcSymbolDiv.firstChild);
+    }
     
+    var calcSymbol = document.createElement('i');
+    calcSymbol.setAttribute('id','calcSymbol');
+    calcSymbol.setAttribute('style','font-size:24px;vertical-align:middle');
+
+    calcSymbolDiv.appendChild(calcSymbol);
+
     switch (_calculationType) {
-        
         case 'M':
             calcSymbol.setAttribute('class','fa fa-circle');
             break;
@@ -44,7 +53,17 @@ function generateComputeTask(){
             break;
         case 'D':
             checkDivision(firstNumber,secondNumber);
-            calcSymbol.setAttribute('class','fa fa-ellipsis-v');
+            calcSymbol.setAttribute('class','fa fa-circle');
+
+            var lowerDot = document.createElement('i');
+            lowerDot.setAttribute('class','fa fa-circle');
+            lowerDot.setAttribute('style','font-size:24px;vertical-align:middle');
+
+            var br = document.createElement('br');
+
+            calcSymbolDiv.appendChild(br);
+            calcSymbolDiv.appendChild(lowerDot);
+            
             break;
         default:
             break;
