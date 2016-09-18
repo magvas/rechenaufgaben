@@ -2,6 +2,7 @@ var _counterSuccess = 0;
 var _counterFail = 0;
 var _calculationType = "M";
 var _numberSpace = 10;
+var _computeTask;
 
 function start() {
     document.getElementById("txtNumberSpace").value = _numberSpace;
@@ -12,6 +13,7 @@ function init(calculationType,numberSpace){
     setNumberSpace(numberSpace);
     closeSettings();
     generateComputeTask();
+    displayComputeTask(_computeTask);
 }
 
 function getRandomNumber(){
@@ -20,11 +22,43 @@ function getRandomNumber(){
 }
 
 function generateComputeTask(){
-    var firstNumber = getRandomNumber();
-    var secondNumber = getRandomNumber();
-   
-    document.getElementById("txtFirstNumber").innerText = firstNumber;
-    document.getElementById("txtSecondNumber").innerText = secondNumber; 
+
+    
+    
+
+    
+
+    switch (_calculationType) {
+        case 'MI':
+           
+            do {
+                _computeTask = getRandomNumbers();
+            }
+            while (checkMinus(_computeTask.firstNumber,_computeTask.secondNumber) == false);
+            break;
+        case 'D':
+            do {
+                _computeTask = getRandomNumbers();
+            }
+            while (checkDivision(_computeTask.firstNumber,_computeTask.secondNumber) == false);
+            break;
+        default:
+            _computeTask = getRandomNumbers();
+            break;
+    }
+}
+
+function getRandomNumbers() {
+    var randomNumbersContainer = new computeTaskContainer();
+    randomNumbersContainer.firstNumber = getRandomNumber();
+    randomNumbersContainer.secondNumber = getRandomNumber();
+    return randomNumbersContainer;
+}
+
+function displayComputeTask(computeTask){
+       
+    document.getElementById("txtFirstNumber").innerText = computeTask.firstNumber;
+    document.getElementById("txtSecondNumber").innerText = computeTask.secondNumber; 
 
     var calcSymbolDiv = document.getElementById('calcSymbolDiv');
 
@@ -48,11 +82,9 @@ function generateComputeTask(){
             calcSymbol.setAttribute('class','fa fa-plus');
             break;
         case 'MI':
-            checkMinus(firstNumber,secondNumber);
             calcSymbol.setAttribute('class','fa fa-minus');
             break;
         case 'D':
-            checkDivision(firstNumber,secondNumber);
             calcSymbol.setAttribute('class','fa fa-circle');
 
             var lowerDot = document.createElement('i');
@@ -76,7 +108,7 @@ function generateComputeTask(){
 function showSuccess(){
     var result = getResult();
     var userResult = document.getElementById("txtUserResult").value;
-    result.computeTask = result.computeTask + userResult;
+    result.computeTaskDisplay = result.computeTaskDisplay + userResult;
     
     var resultsListElement = document.getElementById("furtherResultsList");
     
@@ -95,11 +127,12 @@ function showSuccess(){
     }
     
     resultListItemElement.setAttributeNode(classAttribute);
-    resultListItemElement.innerText = result.computeTask;
+    resultListItemElement.innerText = result.computeTaskDisplay;
     
     resultsListElement.insertBefore(resultListItemElement, resultsListElement.childNodes[0]);  
     
     generateComputeTask();
+    displayComputeTask(_computeTask);
 }
 
 function getResult(){
@@ -110,19 +143,19 @@ function getResult(){
     switch (_calculationType) {
         case 'M':
             result.result = firstNumber * secondNumber;
-            result.computeTask = firstNumber + " * " + secondNumber + " = ";
+            result.computeTaskDisplay = firstNumber + " * " + secondNumber + " = ";
             break;
         case 'A':
              result.result = parseInt(firstNumber) + parseInt(secondNumber);
-             result.computeTask = firstNumber + " + " + secondNumber + " = ";
+             result.computeTaskDisplay = firstNumber + " + " + secondNumber + " = ";
             break;
         case 'MI':
              result.result = parseInt(firstNumber) - parseInt(secondNumber);
-             result.computeTask = firstNumber + " - " + secondNumber + " = ";
+             result.computeTaskDisplay = firstNumber + " - " + secondNumber + " = ";
             break;
         case 'D':
              result.result = parseInt(firstNumber) / parseInt(secondNumber);
-             result.computeTask = firstNumber + " / " + secondNumber + " = ";
+             result.computeTaskDisplay = firstNumber + " : " + secondNumber + " = ";
             break;
         default:
             break;
@@ -153,7 +186,7 @@ function checkMinus(firstNumber,secondNumber){
     var result = firstNumber - secondNumber;
 
     if (result < 0) {
-        generateComputeTask();
+        computeTaskValid = false;
     }
 
     return computeTaskValid;
@@ -163,15 +196,16 @@ function checkDivision(firstNumber,secondNumber){
     var computeTaskValid = true;
     
     if (firstNumber < secondNumber) {
-        generateComputeTask();
+        computeTaskValid = false;
     }
-    else{
-        if ((firstNumber % secondNumber) !== 0) {
-        generateComputeTask();
-        }
-    }
-
     
+    if ((firstNumber % secondNumber) !== 0) {
+        computeTaskValid = false;
+    }     
+
+    if (secondNumber > 10 ) {
+        computeTaskValid = false;
+    }
 
     return computeTaskValid;
 }
@@ -179,6 +213,11 @@ function checkDivision(firstNumber,secondNumber){
 
 var resultContainer = function(){
     this.result;
-    this.computeTask;
+    this.computeTaskDisplay;
     this.success;
+}
+
+var computeTaskContainer = function(){
+    this.firstNumber;
+    this.secondNumber;
 }
